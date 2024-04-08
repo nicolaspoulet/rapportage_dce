@@ -8,8 +8,6 @@ library(matrixStats)
 #### Analyse 2010 #######
 
 pressions2010 <- read_excel("20120801_SWB_pression_impact_V3.xls")
-View(presssions2010)
-
 
 pressions2010_sel <- pressions2010 %>%
   select(EUSurfaceWaterBodyCode...5,
@@ -89,9 +87,6 @@ indices_colonnes <- 5:65
 pressions2010_sel <- pressions2010_sel %>%
   mutate_at(indices_colonnes, as.numeric)
 
-str(pressions2010_sel)
-
-
 # On aggrege les groupes de pressions
 
 # Calculer la somme des colonnes commençant par "1."
@@ -100,7 +95,7 @@ pressions2010_sel_agr <- pressions2010_sel %>%
   mutate(
     `1. pollution ponctuelle` = as.numeric(rowSums(select(., starts_with("1."))) > 0),
     `2. Pollution diffuse` = as.numeric(rowSums(select(., starts_with("2."))) > 0),
-    `3. prélèvement d'eau` = as.numeric(rowSums(select(., starts_with("3."))) > 0),
+    `3. hydrologie` = as.numeric(rowSums(select(., starts_with("3."))) > 0),
     `4. hydromorpho` = as.numeric(rowSums(select(., starts_with("4."))) > 0),
     `5. gestion eau` = as.numeric(rowSums(select(., starts_with("5."))) > 0),
     `6. gestion eau transition` = as.numeric(rowSums(select(., starts_with("6."))) > 0),
@@ -113,7 +108,7 @@ pressions2010_sel_agr <- pressions2010_sel %>%
          code_wb,
          `1. pollution ponctuelle`, 
          `2. Pollution diffuse`, 
-         `3. prélèvement d'eau`,
+         `3. hydrologie`,
          `4. hydromorpho`,
          `5. gestion eau`,
          `6. gestion eau transition`,
@@ -122,12 +117,6 @@ pressions2010_sel_agr <- pressions2010_sel %>%
          ) 
   
 
-
-# ACP
-acp_press2010 <- dudi.pca(na.omit(pressions2010_sel_agr))
-
-s.corcircle(acp_press2010$co)
-varACP_press2010 <- acp_press2010$co
 
 ######## Analyse 2016 #####
 
@@ -159,24 +148,13 @@ pressions2016_sel <- pressions2016 %>%
 #  select(-where(~ sum(.x) == 0, na.rm = TRUE))
 
 
-# ACP
-
-m_pression2016_sel <- pressions2016_sel %>%
-  select(`1.1 - Point - Urban waste water`:`8 - Anthropogenic pressure - Unknown`)
-
-acp_press_2016 <- dudi.pca(m_pression2016_sel)
-
-s.corcircle(acp_press_2016$co)
-
-var_acp_pressions2016 <-acp_press_2016$co
-
 # Aggrégation des pressions
 
 pressions2016_sel_agr <- pressions2016_sel %>%
   mutate(
     `1. pollution ponctuelle` = as.numeric(rowSums(select(., starts_with("1."))) > 0),
     `2. Pollution diffuse` = as.numeric(rowSums(select(., starts_with("2."))) > 0),
-    `3. prélèvement d'eau` = as.numeric(rowSums(select(., starts_with("3."))) > 0),
+    `3. hydrologie` = as.numeric(rowSums(select(., starts_with("3."))) > 0),
     `4. hydromorpho` = as.numeric(rowSums(select(., starts_with("4."))) > 0),
     `5. gestion eau` = as.numeric(rowSums(select(., starts_with("5."))) > 0),
     `6. gestion eau transition` = as.numeric(rowSums(select(., starts_with("6."))) > 0),
@@ -188,7 +166,7 @@ pressions2016_sel_agr <- pressions2016_sel %>%
          code_wb,
          `1. pollution ponctuelle`, 
          `2. Pollution diffuse`, 
-         `3. prélèvement d'eau`,
+         `3. hydrologie`,
          `4. hydromorpho`,
          `5. gestion eau`,
          `6. gestion eau transition`,
@@ -196,15 +174,6 @@ pressions2016_sel_agr <- pressions2016_sel %>%
          `8. autres pressions`
   )
 
-
-
-# ACP
-
-acp_press_2016 <- dudi.pca(pressions2016_sel_agr)
-
-s.corcircle(acp_press_2016$co)
-
-var_acp_pressions2016 <-acp_press_2016$co
 
 ###### Analyse 2022 #######
 
@@ -222,7 +191,7 @@ pressions2022_sel_agr <- pressions2022_sel %>%
   mutate(
     `1. pollution ponctuelle` = as.numeric(rowSums(select(., starts_with("1."))) > 0),
     `2. Pollution diffuse` = as.numeric(rowSums(select(., starts_with("2."))) > 0),
-    `3. prélèvement d'eau` = as.numeric(rowSums(select(., starts_with("3."))) > 0),
+    `3. hydrologie` = as.numeric(rowSums(select(., starts_with("3."))) > 0),
     `4. hydromorpho` = as.numeric(rowSums(select(., starts_with("4."))) > 0),
     `5. gestion eau` = as.numeric(rowSums(select(., starts_with("5."))) > 0),
     `6. gestion eau transition` = as.numeric(rowSums(select(., starts_with("6."))) > 0),
@@ -234,7 +203,7 @@ pressions2022_sel_agr <- pressions2022_sel %>%
          code_wb,
          `1. pollution ponctuelle`, 
          `2. Pollution diffuse`, 
-         `3. prélèvement d'eau`,
+         `3. hydrologie`,
          `4. hydromorpho`,
          `5. gestion eau`,
          `6. gestion eau transition`,
@@ -256,7 +225,7 @@ pressions_tot_sel <- pressions_tot %>%
          code_wb,
          `1. pollution ponctuelle`, 
          `2. Pollution diffuse`, 
-         `3. prélèvement d'eau`,
+         `3. hydrologie`,
          `4. hydromorpho`,
          `5. gestion eau`,
          `6. gestion eau transition`,
@@ -272,7 +241,7 @@ pressions_tot_sel <- pressions_tot %>%
          code_wb,
          `1. pollution ponctuelle`, 
          `2. Pollution diffuse`, 
-         `3. prélèvement d'eau`,
+         `3. hydrologie`,
          `4. hydromorpho`,
          `5. gestion eau`) %>% 
   na.omit(.) %>% 
@@ -289,6 +258,7 @@ année <- as.factor(pressions_tot_sel$année)
 wb <- as.factor(pressions_tot_sel$code_wb)
 
 ## Analyse toutes pressions
+
 
 acp_tot <- dudi.pca(m_press_tot, scannf = F, nf = 2, center = T, scale = F)
 s.arrow(acp_tot$co)
@@ -378,5 +348,7 @@ ggplot(resum_pressions_phys, aes(x = pente)) +
   labs(x = "Pente", y = "Fréquence") +  # ajoutez des étiquettes d'axes
   ggtitle("Evolution des pressions physiques")  # ajoutez un titre au graphique
 
+### On sauve les tableaux finaux
 
+save(pressions_tot_sel, resum_pressions_tot, resum_pressions_poll, resum_pressions_phys, file="etatdeslieux_pressions.RData")
 
