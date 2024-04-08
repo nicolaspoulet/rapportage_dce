@@ -304,8 +304,8 @@ colnames(scores_wb_poll)[2] <- "wb"
 resum_pressions_poll <- scores_wb_tot %>%
   group_by(wb) %>%
   summarize(
-    pente = lm(Axis1 ~ année)$coefficients[2],
-    indice_pressions = mean(Axis1)
+    pente_poll = lm(Axis1 ~ année)$coefficients[2],
+    indice_pressions_poll = mean(Axis1)
   )
 
 
@@ -333,8 +333,8 @@ colnames(scores_wb_phys)[2] <- "wb"
 resum_pressions_phys <- scores_wb_tot %>%
   group_by(wb) %>%
   summarize(
-    pente = lm(Axis1 ~ année)$coefficients[2],
-    indice_pressions = mean(Axis1)
+    pente_phys = lm(Axis1 ~ année)$coefficients[2],
+    indice_pressions_phys = mean(Axis1)
   )
 
 
