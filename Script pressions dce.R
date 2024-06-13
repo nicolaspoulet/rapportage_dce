@@ -274,7 +274,7 @@ colnames(scores_wb_tot)[2] <- "wb"
 resum_pressions_tot <- scores_wb_tot %>%
   group_by(wb) %>%
   summarize(
-    pente = lm(Axis1 ~ année)$coefficients[2],
+    tendance = lm(Axis1 ~ année)$coefficients[2],
     indice_pressions = mean(Axis1)
   )
 
@@ -284,7 +284,7 @@ ggplot(resum_pressions_tot, aes(x = indice_pressions)) +
   labs(x = "Indice de pression", y = "Fréquence") +  # ajoutez des étiquettes d'axes
   ggtitle("Histogramme de l'indice de pression")  # ajoutez un titre au graphique
 
-ggplot(resum_pressions_tot, aes(x = pente)) +
+ggplot(resum_pressions_tot, aes(x = tendance)) +
   geom_histogram(binwidth = 0.1) +  # spécifiez la largeur des bacs selon vos préférences
   labs(x = "Pente", y = "Fréquence") +  # ajoutez des étiquettes d'axes
   ggtitle("Histogramme de la pente")  # ajoutez un titre au graphique
@@ -301,20 +301,21 @@ scores_wb_poll <- bind_cols(année,wb,acp_poll$li)
 colnames(scores_wb_poll)[1] <- "année"
 colnames(scores_wb_poll)[2] <- "wb"
 
-resum_pressions_poll <- scores_wb_tot %>%
+resum_pressions_poll <- scores_wb_poll %>%
   group_by(wb) %>%
   summarize(
-    pente_poll = lm(Axis1 ~ année)$coefficients[2],
-    indice_pressions_poll = mean(Axis1)
+    tendance_poll = lm(Axis1 ~ année)$coefficients[2],
+    indice_pressions_poll1 = mean(Axis1),
+    indice_pressions_poll2 = mean(Axis2)
   )
 
 
-ggplot(resum_pressions_poll, aes(x = indice_pressions)) +
+ggplot(resum_pressions_poll, aes(x = indice_pressions_poll2)) +
   geom_histogram(binwidth = 0.1) +  # spécifiez la largeur des bacs selon vos préférences
   labs(x = "Indice de pression", y = "Fréquence") +  # ajoutez des étiquettes d'axes
   ggtitle("Histogramme de l'indice de pression chimique")  # ajoutez un titre au graphique
 
-ggplot(resum_pressions_poll, aes(x = pente)) +
+ggplot(resum_pressions_poll, aes(x = tendance_poll)) +
   geom_histogram(binwidth = 0.1) +  # spécifiez la largeur des bacs selon vos préférences
   labs(x = "Pente", y = "Fréquence") +  # ajoutez des étiquettes d'axes
   ggtitle("Evolution des pressions chimiques")  # ajoutez un titre au graphique
@@ -330,20 +331,21 @@ scores_wb_phys <- bind_cols(année,wb,acp_phys$li)
 colnames(scores_wb_phys)[1] <- "année"
 colnames(scores_wb_phys)[2] <- "wb"
 
-resum_pressions_phys <- scores_wb_tot %>%
+resum_pressions_phys <- scores_wb_phys %>%
   group_by(wb) %>%
   summarize(
-    pente_phys = lm(Axis1 ~ année)$coefficients[2],
-    indice_pressions_phys = mean(Axis1)
+    tendance_phys = lm(Axis1 ~ année)$coefficients[2],
+    indice_pressions_morpho = mean(Axis1),
+    indice_pressions_hydro = mean(Axis2)
   )
 
 
-ggplot(resum_pressions_phys, aes(x = indice_pressions)) +
+ggplot(resum_pressions_phys, aes(x = indice_pressions_phys)) +
   geom_histogram(binwidth = 0.1) +  # spécifiez la largeur des bacs selon vos préférences
   labs(x = "Indice de pression", y = "Fréquence") +  # ajoutez des étiquettes d'axes
   ggtitle("Histogramme de l'indice de pression physique")  # ajoutez un titre au graphique
 
-ggplot(resum_pressions_phys, aes(x = pente)) +
+ggplot(resum_pressions_phys, aes(x = tendance_phys)) +
   geom_histogram(binwidth = 0.1) +  # spécifiez la largeur des bacs selon vos préférences
   labs(x = "Pente", y = "Fréquence") +  # ajoutez des étiquettes d'axes
   ggtitle("Evolution des pressions physiques")  # ajoutez un titre au graphique
